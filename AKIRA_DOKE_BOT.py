@@ -12,6 +12,9 @@ app = Flask(__name__)
 line_bot_api = LineBotApi(LINE_BOT_API)
 handler = WebhookHandler(LINE_SECRET)
 
+if not LINE_BOT_API or not LINE_SECRET:
+    raise ValueError("❌ 環境變數未正確設置，請檢查 Railway 設定！")
+
 # 記錄玩家的身份（預設是知惠子）
 user_roles = {}
 

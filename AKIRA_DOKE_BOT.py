@@ -2,7 +2,10 @@ from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
-import random
+import os
+
+LINE_BOT_API = os.getenv("LINE_BOT_API")
+LINE_SECRET = os.getenv("LINE_SECRET")
 
 app = Flask(__name__)
 

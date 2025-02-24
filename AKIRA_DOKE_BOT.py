@@ -3,6 +3,24 @@ from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 import os
+import random
+import threading
+import time
+import requests
+
+def keep_alive():
+    url = "你的 Replit 網址"
+    while True:
+        try:
+            requests.get(url)
+            print("Ping 成功，保持 Replit 活著！")
+        except Exception as e:
+            print("Ping 失敗：", e)
+        time.sleep(300)  # 每 5 分鐘 Ping 一次
+
+# 在 Flask 伺服器啟動時，開一個新執行緒來執行 keep_alive()
+threading.Thread(target=keep_alive, daemon=True).start()
+
 
 LINE_BOT_API = os.getenv("LINE_BOT_API")
 LINE_SECRET = os.getenv("LINE_SECRET")
@@ -109,17 +127,22 @@ def handle_message(event):
     reply_text = f"滾{random.choice(punctuations)} {random.choice(makki_replies[role])}"
     
     # 30% 機率讓石川亂入
-    if random.random() < 0.3:  # 30% 機率觸發
+    if random.random() < 0.1:  # 30% 機率觸發
         ishikawa_reply = f"\n石川：{random.choice(ishikawa_comments)}"
         reply_text += ishikawa_reply
 
     # 30% 機率讓「作者 aka 你」吐槽
-    if random.random() < 0.3:  # 30% 機率觸發
+    if random.random() < 0.1:  # 30% 機率觸發
         author_reply = f"\n作者：{random.choice(author_trolls)}"
         reply_text += author_reply
 
     # 發送回應
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply_text))
 
+import os
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
+@app.route("/")
+def home():
+    return "Akira Doke Bot is running!"

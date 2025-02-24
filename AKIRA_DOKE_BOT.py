@@ -6,10 +6,6 @@ import random
 
 app = Flask(__name__)
 
-# 🔹 你的 LINE Bot Token & Secret（請填入你的資訊）
-LINE_BOT_API = "6KGfuSJHyZXkNeTL5Tm0gKcM815fZtCyHZ13uM17g6/cvgBXyEvlHP/k1tofXZO7CewhHS+LGp60MM3vrannCiqiqGWg1Q6tBvhNam3SgJOo5WcZeSnOppHXRUVYAxDI/RM4MVY5aB3h+HjZBQwRTwdB04t89/1O/w1cDnyilFU="
-LINE_SECRET = "66c96646715bdc7efde71cad0e757bd0"
-
 line_bot_api = LineBotApi(LINE_BOT_API)
 handler = WebhookHandler(LINE_SECRET)
 
